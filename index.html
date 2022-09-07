@@ -11,8 +11,30 @@
 <body>
   <header>
     <h1>Library</h1>
-    <button>Add Book</button>
+    <button class="add-cta">Add Book</button>
   </header>
   <div class="grid-container"></div>
 </body>
+<dialog>
+  <form action='' method='dialog'>
+    <fieldset>
+      <legend>Add New Book</legend>
+      <div class='form-item'>
+        <label for='title'>Title</label>
+        <input id='title' name='title' type='text'/>
+      </div>
+      <div class='form-item'>
+        <label for='author'>Author</label>
+        <input id='author' name='author' type='text'/>
+      </div>
+      <div class='form-item'>
+        <label for='pages'>Pages</label>
+        <input id='pages' name='pages' type='number'/>
+      </div>
+      <div>
+        <button class="add-submit">Add</button>
+      </div>
+    </fieldset>   
+  </form>
+</dialog>
 </html>

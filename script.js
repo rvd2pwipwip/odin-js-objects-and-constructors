@@ -61,3 +61,19 @@ myLibrary.forEach((book) => {
   const grid = document.querySelector('.grid-container');
   grid.appendChild(card);
 });
+
+const addCta = document.querySelector('.add-cta');
+const dialog = document.querySelector('dialog');
+const addSubmit = document.querySelector('.add-submit');
+
+addCta.style.background = 'red';
+addCta.addEventListener('click', () => {
+  dialog.showModal();
+});
+
+///// unnecessary because html form has method='dialog' /////
+// addSubmit.addEventListener('click', () => {
+//   dialog.close();
+// });
+
+
