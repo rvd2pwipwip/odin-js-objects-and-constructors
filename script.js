@@ -76,4 +76,47 @@ addCta.addEventListener('click', () => {
 //   dialog.close();
 // });
 
+dialog.addEventListener('click', (e) => {
+  if (e.target === dialog) {
+    dialog.close();
+  }
+});
 
+///////////////////////////
+///// js dialog modal /////
+///////////////////////////
+
+const openModalButtons = document.querySelectorAll('[data-modal-target]');
+const closeModalButtons = document.querySelectorAll('[data-close-button]');
+const scrim = document.getElementById('scrim');
+
+openModalButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(button.dataset.modalTarget);
+    openModal(modal);
+  });
+});
+
+closeModalButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal');
+    closeModal(modal);
+  });
+});
+
+function openModal(modal) {
+  if (modal == null) return;
+  modal.classList.add('active');
+  scrim.classList.add('active');
+}
+
+function closeModal(modal) {
+  if (modal == null) return;
+  modal.classList.remove('active');
+  scrim.classList.remove('active');
+}
+
+scrim.addEventListener('click', () => {
+  const modals = document.querySelectorAll('.modal.active');
+  modals.forEach(modal => closeModal(modal));
+})

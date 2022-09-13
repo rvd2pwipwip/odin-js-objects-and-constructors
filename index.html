@@ -12,13 +12,24 @@
   <header>
     <h1>Library</h1>
     <button class="add-cta">Add Book</button>
+    <button data-modal-target="#modal" class="add-cta">Open Modal</button>
   </header>
   <div class="grid-container"></div>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="title">Example Modal</div>
+      <button data-close-button class="close-button">&times;</button>
+    </div>
+    <div class="modal-body">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam id minus perferendis tenetur alias repellat eaque, debitis, qui doloremque omnis sint consequuntur dolorem nemo officiis in harum aliquam at nostrum voluptate nisi! Recusandae temporibus doloremque placeat at natus voluptatum in? Obcaecati voluptate, velit aliquid eum delectus enim porro. Odio dolores nesciunt dolore assumenda est sint quibusdam placeat, possimus omnis? Eaque quod ullam ex culpa ut! Eligendi ipsum sint, odio, blanditiis enim quibusdam deserunt voluptatibus, illum placeat laborum ratione neque. Dolores?
+    </div>
+  </div>
+  <div id="scrim"></div>
 </body>
 <dialog>
   <form action='' method='dialog'>
     <fieldset>
-      <legend>Add New Book</legend>
+      <legend>Add New Book<button data-close-button class="close-button">&times;</button></legend>
       <div class='form-item'>
         <label for='title'>Title</label>
         <input id='title' name='title' type='text'/>
