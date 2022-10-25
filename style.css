@@ -63,11 +63,22 @@ dialog {
   width: 30ch;
   overflow: hidden;
   animation: show 0.3s ease normal;
+  transition: close 0.3s ease normal;
 }
 
 @keyframes show{
   from {transform: scale(0);}
   to {transform: scale(100%);}
+}
+
+/* dialog.close {
+  background: greenyellow;
+  transition: close 0.3s ease normal;
+} */
+
+@keyframes close {
+  from {transform: scale(100%);}
+  to {transform: scale(0);}
 }
 
 dialog::backdrop {
@@ -143,71 +154,4 @@ input {
 input:focus {
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
   outline: 1px solid lightgray;
-}
-
-/*********************************************************/
-/* JS Dialog Form */
-/*********************************************************/
-
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  transition: 300ms ease-in-out;
-  border-radius: 10px;
-  z-index: 10;
-  background: white;
-  width: 50ch;
-  max-width: 80%;
-  /* border: 1px solid black; */
-  overflow: hidden;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-}
-
-.modal.active {
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.modal-header {
-  padding: 10px 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: lightgrey;
-}
-
-.modal-header .title {
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-header .close-button {
-  cursor: pointer;
-  border: none;
-  outline: none;
-  background: none;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.modal-body {
-  padding: 10px 15px;
-}
-
-#scrim {
-  position: fixed;
-  opacity: 0;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.4);
-  pointer-events: none;
-  transition: 300ms ease-in-out;
-}
-
-#scrim.active {
-  opacity: 1;
-  pointer-events: all;
 }

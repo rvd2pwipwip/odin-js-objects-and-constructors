@@ -1,28 +1,36 @@
 let myLibrary = [];
 
-function Book(title, author, pages, read) {
+function Book(title, author, pages, isRead) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.read = read;
+  this.isRead = isRead;
 }
 
 Book.prototype.info = function () {
   console.log(this);
   return `${this.title} by ${this.author}, ${this.pages} pages, ${
-    this.read ? 'read' : 'not read yet'
+    this.isRead ? 'read' : 'not read yet'
   }`;
 };
+
+Book.prototype.toggleStatus = function () {
+  this.isRead = !this.isRead;
+}
 
 function addBookToLibrary() {
   let title = prompt('Enter title');
   let author = prompt('Enter author');
   let pages = prompt('Enter pages');
   let readInput = prompt('Enter read (y or n)');
-  let read = readInput === 'y' ? true : false;
+  let isRead = readInput === 'y' ? true : false;
 
-  let newBook = new Book(title, author, pages, read);
+  let newBook = new Book(title, author, pages, isRead);
   myLibrary.push(newBook);
+}
+
+function removeBook(id) {
+  myLibrary.splice(id, 1);
 }
 
 myLibrary.push(new Book('The Hobbit', 'J.R.R. Tolkien', 295, true));
@@ -40,41 +48,58 @@ myLibrary.push(
 // console.log(myLibrary[0] instanceof Book);
 // console.log(myLibrary[0].constructor === Book);
 
-myLibrary.forEach((book) => {
-  const card = document.createElement('div');
-  card.classList.add('card');
-
-  const title = document.createElement('h3');
-  title.classList.add('title');
-  title.textContent = book.title;
-
-  const author = document.createElement('p');
-  author.classList.add('author');
-  author.textContent = book.author;
-
-  const pages = document.createElement('p');
-  pages.classList.add('pages');
-  pages.textContent = book.pages;
-
-  card.append(title, author, pages);
-
-  const grid = document.querySelector('.grid-container');
-  grid.appendChild(card);
-});
-
 const addCta = document.querySelector('.add-cta');
 const dialog = document.querySelector('dialog');
 const addSubmit = document.querySelector('.add-submit');
+const grid = document.querySelector('.grid-container');
+
+function drawCardGrid() {
+  grid.innerHTML = ''; // reset grid
+
+  myLibrary.forEach((book) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.bookId = myLibrary.indexOf(book);
+
+    const title = document.createElement('h3');
+    title.classList.add('title');
+    title.textContent = book.title;
+
+    const author = document.createElement('p');
+    author.classList.add('author');
+    author.textContent = book.author;
+
+    const pages = document.createElement('p');
+    pages.classList.add('pages');
+    pages.textContent = book.pages;
+
+    const isReadStatusBtn = document.createElement('button');
+    isReadStatusBtn.classList.add('read-status');
+    isReadStatusBtn.textContent = book.isRead ? 'Read' : 'Not read';
+    isReadStatusBtn.addEventListener('click', (e) => {
+      myLibrary[e.target.parentNode.dataset.bookId].toggleStatus();
+      drawCardGrid();
+    });
+
+    const removeBtn = document.createElement('button');
+    removeBtn.classList.add('remove');
+    removeBtn.textContent = 'Remove Book';
+    removeBtn.addEventListener('click', (e) => {
+      removeBook(e.target.parentNode.dataset.bookId)
+      drawCardGrid();
+    });
+
+    card.append(title, author, pages, isReadStatusBtn, removeBtn);
+    grid.appendChild(card);
+  });
+}
+
+drawCardGrid();
 
 addCta.style.background = 'red';
 addCta.addEventListener('click', () => {
   dialog.showModal();
 });
-
-///// unnecessary because html form has method='dialog' /////
-// addSubmit.addEventListener('click', () => {
-//   dialog.close();
-// });
 
 dialog.addEventListener('click', (e) => {
   if (e.target === dialog) {
@@ -82,41 +107,6 @@ dialog.addEventListener('click', (e) => {
   }
 });
 
-///////////////////////////
-///// js dialog modal /////
-///////////////////////////
-
-const openModalButtons = document.querySelectorAll('[data-modal-target]');
-const closeModalButtons = document.querySelectorAll('[data-close-button]');
-const scrim = document.getElementById('scrim');
-
-openModalButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const modal = document.querySelector(button.dataset.modalTarget);
-    openModal(modal);
-  });
-});
-
-closeModalButtons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const modal = button.closest('.modal');
-    closeModal(modal);
-  });
-});
-
-function openModal(modal) {
-  if (modal == null) return;
-  modal.classList.add('active');
-  scrim.classList.add('active');
-}
-
-function closeModal(modal) {
-  if (modal == null) return;
-  modal.classList.remove('active');
-  scrim.classList.remove('active');
-}
-
-scrim.addEventListener('click', () => {
-  const modals = document.querySelectorAll('.modal.active');
-  modals.forEach(modal => closeModal(modal));
+addSubmit.addEventListener('click', () => {
+  console.log('push new book');
 })
