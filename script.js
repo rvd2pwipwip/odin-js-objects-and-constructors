@@ -18,15 +18,27 @@ Book.prototype.toggleStatus = function () {
   this.isRead = !this.isRead;
 }
 
+// function addBookToLibrary() {
+//   let title = prompt('Enter title');
+//   let author = prompt('Enter author');
+//   let pages = prompt('Enter pages');
+//   let readInput = prompt('Enter read (y or n)');
+//   let isRead = readInput === 'y' ? true : false;
+
+//   let newBook = new Book(title, author, pages, isRead);
+//   myLibrary.push(newBook);
+// }
+
 function addBookToLibrary() {
-  let title = prompt('Enter title');
-  let author = prompt('Enter author');
-  let pages = prompt('Enter pages');
-  let readInput = prompt('Enter read (y or n)');
-  let isRead = readInput === 'y' ? true : false;
+  const title = document.getElementById('title').value;
+  const author = document.getElementById('author').value;
+  const pages = document.getElementById('pages').value;
+  const readStatus = document.getElementById('read-status').value;
+  let isRead = readStatus === 'Read' ? true : false;
 
   let newBook = new Book(title, author, pages, isRead);
   myLibrary.push(newBook);
+  drawCardGrid();
 }
 
 function removeBook(id) {
@@ -108,5 +120,5 @@ dialog.addEventListener('click', (e) => {
 });
 
 addSubmit.addEventListener('click', () => {
-  console.log('push new book');
+  addBookToLibrary();
 })
