@@ -16,7 +16,7 @@ Book.prototype.info = function () {
 
 Book.prototype.toggleStatus = function () {
   this.isRead = !this.isRead;
-}
+};
 
 // function addBookToLibrary() {
 //   let title = prompt('Enter title');
@@ -30,15 +30,21 @@ Book.prototype.toggleStatus = function () {
 // }
 
 function addBookToLibrary() {
-  const title = document.getElementById('title').value;
-  const author = document.getElementById('author').value;
-  const pages = document.getElementById('pages').value;
-  const readStatus = document.getElementById('read-status').value;
+  let title = document.getElementById('title').value;
+  let author = document.getElementById('author').value;
+  let pages = document.getElementById('pages').value;
+  let readStatus = document.getElementById('read-status').value;
   let isRead = readStatus === 'Read' ? true : false;
 
-  let newBook = new Book(title, author, pages, isRead);
-  myLibrary.push(newBook);
-  drawCardGrid();
+  if (title && author && pages && readStatus) {
+    const newBook = new Book(title, author, pages, isRead);
+    myLibrary.push(newBook);
+    title = null;
+    author = null;
+    pages = null;
+    readStatus = null;
+    drawCardGrid();
+  }
 }
 
 function removeBook(id) {
@@ -83,10 +89,13 @@ function drawCardGrid() {
 
     const pages = document.createElement('p');
     pages.classList.add('pages');
-    pages.textContent = book.pages;
+    pages.textContent = `${book.pages} pages`;
 
     const isReadStatusBtn = document.createElement('button');
     isReadStatusBtn.classList.add('read-status');
+    if (book.isRead === false) {
+      isReadStatusBtn.classList.add('not-read');
+    }
     isReadStatusBtn.textContent = book.isRead ? 'Read' : 'Not read';
     isReadStatusBtn.addEventListener('click', (e) => {
       myLibrary[e.target.parentNode.dataset.bookId].toggleStatus();
@@ -95,11 +104,19 @@ function drawCardGrid() {
 
     const removeBtn = document.createElement('button');
     removeBtn.classList.add('remove');
-    removeBtn.textContent = 'Remove Book';
+
+    const icon = document.createElement('i');
+    icon.classList.add('material-icons');
+    icon.textContent = 'delete';
+    removeBtn.append(icon);
+    removeBtn.append('Remove');
+
     removeBtn.addEventListener('click', (e) => {
-      removeBook(e.target.parentNode.dataset.bookId)
+      removeBook(e.target.parentNode.dataset.bookId);
       drawCardGrid();
     });
+
+    //<button class="add-cta"><i class="material-icons">add</i>Add Book</button>
 
     card.append(title, author, pages, isReadStatusBtn, removeBtn);
     grid.appendChild(card);
@@ -108,7 +125,6 @@ function drawCardGrid() {
 
 drawCardGrid();
 
-addCta.style.background = 'red';
 addCta.addEventListener('click', () => {
   dialog.showModal();
 });
@@ -121,4 +137,4 @@ dialog.addEventListener('click', (e) => {
 
 addSubmit.addEventListener('click', () => {
   addBookToLibrary();
-})
+});

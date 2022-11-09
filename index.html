@@ -4,39 +4,44 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp">
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
   <title>Library</title>
 </head>
+
 <body>
   <header>
     <h1>Library</h1>
-    <button class="add-cta">Add Book</button>
   </header>
+  <button class="add-cta"><i class="material-icons">add</i>Add Book</button>
   <div class="grid-container"></div>
 </body>
+
+
+
 <dialog>
   <form action='' method='dialog'>
     <fieldset>
-      <legend>Add New Book<button>&times;</button></legend>
+      <legend>Add New Book<button id='close-btn'>&times;</button></legend>
       <div class='form-item'>
         <label for='title'>Title</label>
-        <input id='title' name='title' type='text'/>
+        <input id='title' name='title' type='text' required/>
       </div>
       <div class='form-item'>
         <label for='author'>Author</label>
-        <input id='author' name='author' type='text'/>
+        <input id='author' name='author' type='text' required/>
       </div>
       <div class='form-item'>
         <label for='pages'>Pages</label>
-        <input id='pages' name='pages' type='number'/>
+        <input id='pages' name='pages' type='number' min='1' required/>
       </div>
       <div class="form-item">
-        <label>Read Status:
-          <select id="read-status">
-            <option value="default">Choose…</option>
-            <option>Read</option>
-            <option>Not read</option>
+        <label for='read-status'>Read Status:
+          <select id='read-status' name='read-status' required>
+            <option value=''>Choose…</option>
+            <option value='Read'>Read</option>
+            <option value='Not read'>Not read</option>
           </select>
         </label>
       </div>
