@@ -18,16 +18,12 @@ Book.prototype.toggleStatus = function () {
   this.isRead = !this.isRead;
 };
 
-// function addBookToLibrary() {
-//   let title = prompt('Enter title');
-//   let author = prompt('Enter author');
-//   let pages = prompt('Enter pages');
-//   let readInput = prompt('Enter read (y or n)');
-//   let isRead = readInput === 'y' ? true : false;
-
-//   let newBook = new Book(title, author, pages, isRead);
-//   myLibrary.push(newBook);
-// }
+const addCta = document.querySelector('.add-cta');
+const dialog = document.querySelector('dialog');
+const form = document.querySelector('#form');
+const closeDialog = document.querySelector('#close-btn');
+const addSubmit = document.querySelector('.add-submit');
+const grid = document.querySelector('.grid-container');
 
 function addBookToLibrary() {
   let title = document.getElementById('title').value;
@@ -39,10 +35,6 @@ function addBookToLibrary() {
   if (title && author && pages && readStatus) {
     const newBook = new Book(title, author, pages, isRead);
     myLibrary.push(newBook);
-    title = null;
-    author = null;
-    pages = null;
-    readStatus = null;
     drawCardGrid();
   }
 }
@@ -66,15 +58,10 @@ myLibrary.push(
 // console.log(myLibrary[0] instanceof Book);
 // console.log(myLibrary[0].constructor === Book);
 
-const addCta = document.querySelector('.add-cta');
-const dialog = document.querySelector('dialog');
-const addSubmit = document.querySelector('.add-submit');
-const grid = document.querySelector('.grid-container');
-
 function drawCardGrid() {
   grid.innerHTML = ''; // reset grid
 
-  myLibrary.forEach((book) => {
+  myLibrary.forEach((book, index) => {
     const card = document.createElement('div');
     card.classList.add('card');
     card.dataset.bookId = myLibrary.indexOf(book);
@@ -91,6 +78,9 @@ function drawCardGrid() {
     pages.classList.add('pages');
     pages.textContent = `${book.pages} pages`;
 
+    const actionButtons = document.createElement('div');
+    actionButtons.classList.add('action-buttons');
+
     const isReadStatusBtn = document.createElement('button');
     isReadStatusBtn.classList.add('read-status');
     if (book.isRead === false) {
@@ -98,27 +88,25 @@ function drawCardGrid() {
     }
     isReadStatusBtn.textContent = book.isRead ? 'Read' : 'Not read';
     isReadStatusBtn.addEventListener('click', (e) => {
-      myLibrary[e.target.parentNode.dataset.bookId].toggleStatus();
+      myLibrary[index].toggleStatus();
       drawCardGrid();
     });
 
     const removeBtn = document.createElement('button');
     removeBtn.classList.add('remove');
-
     const icon = document.createElement('i');
     icon.classList.add('material-icons');
     icon.textContent = 'delete';
     removeBtn.append(icon);
     removeBtn.append('Remove');
-
     removeBtn.addEventListener('click', (e) => {
-      removeBook(e.target.parentNode.dataset.bookId);
+      removeBook(index);
       drawCardGrid();
     });
 
-    //<button class="add-cta"><i class="material-icons">add</i>Add Book</button>
-
-    card.append(title, author, pages, isReadStatusBtn, removeBtn);
+    actionButtons.append(isReadStatusBtn, removeBtn);
+    card.append(title, author, pages, actionButtons);
+    card.style.aspectRatio = '3 / 4';
     grid.appendChild(card);
   });
 }
@@ -126,7 +114,12 @@ function drawCardGrid() {
 drawCardGrid();
 
 addCta.addEventListener('click', () => {
+  form.reset();
   dialog.showModal();
+});
+
+closeDialog.addEventListener('click', () => {
+  dialog.close();
 });
 
 dialog.addEventListener('click', (e) => {
