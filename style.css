@@ -197,7 +197,7 @@ header h1 {
 
 dialog {
   margin: auto;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   width: 30ch;
   overflow: hidden;
@@ -294,6 +294,70 @@ input:focus {
   box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.1);
   outline: 1px solid lightgray;
 }
+
+.custom-select {
+  position: relative;
+}
+
+select {
+  font-size: 0.875rem;
+  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+  border: 2px solid #C2C2C2;
+  border-radius: 8px;
+  /* appearance: none; */
+  width: 100%;
+}
+
+.custom-arrow {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  background: white;
+  border-top: 2px solid #C2C2C2;
+  border-right: 2px solid #C2C2C2;
+  border-bottom: 2px solid #C2C2C2;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  height: 100%;
+  width: 2rem;
+  pointer-events: none;
+}
+
+.custom-arrow::before,
+.custom-arrow::after {
+  --size: 0.33rem;
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-arrow::before {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-top: var(--size) solid #C2C2C2;
+  top: 65%;
+}
+
+.custom-arrow::after {
+  border-left: var(--size) solid transparent;
+  border-right: var(--size) solid transparent;
+  border-bottom: var(--size) solid #C2C2C2;
+  top: 35%;
+}
+
+select:focus {
+  outline: none;
+}
+
+/* .custom-select label {
+  position: absolute;
+  top: -20px;
+} */
 
 .add-submit {
   display: flex;

@@ -36,14 +36,15 @@
         <label for='pages'>Pages</label>
         <input id='pages' name='pages' type='number' min='1' required/>
       </div>
-      <div class="form-item">
-        <label for='read-status'>Read Status:
+      <div class="custom-select">
+        <!-- <label for='read-status'>Read Status: -->
           <select id='read-status' name='read-status' required>
-            <option value=''>Choose…</option>
+            <option value=''>Read Status…</option>
             <option value='Read'>Read</option>
             <option value='Not read'>Not read</option>
           </select>
-        </label>
+          <span class="custom-arrow"></span>
+        <!-- </label> -->
       </div>
       <div>
         <button class="add-submit"><i class="material-icons">add</i>Add</button>
