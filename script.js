@@ -1,22 +1,23 @@
 let myLibrary = [];
 
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.isRead = isRead;
+class Book {
+  constructor(title, author, pages, isRead) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+  }
+
+  info() {
+    return `${this.title} by ${this.author}, ${this.pages} pages, ${
+      this.isRead ? 'read' : 'not read yet'
+    }`;
+  }
+
+  toggleStatus() {
+    this.isRead = !this.isRead;
+  }
 }
-
-Book.prototype.info = function () {
-  console.log(this);
-  return `${this.title} by ${this.author}, ${this.pages} pages, ${
-    this.isRead ? 'read' : 'not read yet'
-  }`;
-};
-
-Book.prototype.toggleStatus = function () {
-  this.isRead = !this.isRead;
-};
 
 const addCta = document.querySelector('.add-cta');
 const dialog = document.querySelector('dialog');
@@ -49,14 +50,6 @@ myLibrary.push(new Book('Moby-Dick', 'Herman Melville', 635, false));
 myLibrary.push(
   new Book("The Hitchhiker's Guide to the Galaxy", 'Douglas Adams', 193, false)
 );
-
-// console.log(myLibrary[0].info());
-
-// console.log(typeof myLibrary[0]);
-// console.log(myLibrary[0].constructor.name);
-// console.log(Object.getPrototypeOf(myLibrary[0]));
-// console.log(myLibrary[0] instanceof Book);
-// console.log(myLibrary[0].constructor === Book);
 
 function drawCardGrid() {
   grid.innerHTML = ''; // reset grid
