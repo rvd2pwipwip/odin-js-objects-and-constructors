@@ -26,18 +26,30 @@ const closeDialog = document.querySelector('#close-btn');
 const addSubmit = document.querySelector('.add-submit');
 const grid = document.querySelector('.grid-container');
 
+const title = document.getElementById('title');
+const titleError = document.querySelector('#title + span.error');
+console.log(titleError);
+
 function addBookToLibrary() {
-  let title = document.getElementById('title').value;
   let author = document.getElementById('author').value;
   let pages = document.getElementById('pages').value;
   let readStatus = document.getElementById('read-status').value;
   let isRead = readStatus === 'Read' ? true : false;
 
-  if (title && author && pages && readStatus) {
-    const newBook = new Book(title, author, pages, isRead);
-    myLibrary.push(newBook);
-    drawCardGrid();
+  if (title.validity.valid) {
+    titleError.textContent = ''; // Remove the message content
+    titleError.className = 'error'; // Removes the `active` class
+  } else {
+    // If there is still an error, show the correct error
+    console.log('error');
+    showError();
   }
+
+  // if (title && author && pages && readStatus) {
+  //   const newBook = new Book(title, author, pages, isRead);
+  //   myLibrary.push(newBook);
+  //   drawCardGrid();
+  // }
 }
 
 function removeBook(id) {
@@ -124,3 +136,15 @@ dialog.addEventListener('click', (e) => {
 addSubmit.addEventListener('click', () => {
   addBookToLibrary();
 });
+
+function showError() {
+  if (title.validity.valueMissing) {
+    // If empty
+    titleError.textContent = 'You need to enter a title for the book.';
+  } else if (title.validity.tooShort) {
+    // If the value is too short,
+    titleError.textContent = `Book title should be at least ${title.minLength} characters; you entered ${title.value.length}.`;
+  }
+  // Add the `active` class
+  titleError.className = 'error active';
+}

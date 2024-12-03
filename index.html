@@ -21,12 +21,14 @@
 
 
 <dialog>
-  <form action='' method='dialog' id="form">
+  <!-- custom JavaScript validation with novalidate -->
+  <form action='' method='dialog' id="form" novalidate>
     <fieldset>
       <legend>Add New Book<button id='close-btn'>&times;</button></legend>
       <div class='form-item'>
         <label for='title'>Title</label>
-        <input id='title' name='title' type='text' required/>
+        <input id='title' name='title' type='text' required minlength="2"/>
+        <span class="error" aria-live="polite"></span>
       </div>
       <div class='form-item'>
         <label for='author'>Author</label>
